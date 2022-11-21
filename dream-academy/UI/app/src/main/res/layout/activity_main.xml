@@ -30,6 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/guideline2"
+        app:cardCornerRadius="20dp"
         app:layout_constraintVertical_bias="0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +41,6 @@
                 android:id="@+id/text_input_"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/text_input"
                 android:gravity="center"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
@@ -51,8 +51,9 @@
                 app:layout_constraintVertical_bias="0.135">
 
                 <EditText
-                    android:layout_width="305dp"
-                    android:layout_height="48dp"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@drawable/text_input"
                     android:hint="@string/username" />
 
@@ -62,9 +63,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_password"
                 android:layout_width="334dp"
-                android:layout_height="49dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/text_input_"
-                android:background="@drawable/text_input"
                 app:boxStrokeWidth="0dp"
                 app:boxStrokeWidthFocused="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -73,12 +73,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_input_"
                 app:layout_constraintVertical_bias="0.147"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="#2f82ff">
+                app:passwordToggleTint="#2f82ff"
+                app:helperTextEnabled="true"
+                app:errorEnabled="true"
+                >
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="match_parent"
                     android:background="@drawable/text_input"
+                    android:inputType="textPassword"
                     android:hint="@string/password" />
 
 
@@ -89,15 +93,17 @@
                 android:layout_width="305dp"
                 android:layout_height="40dp"
                 android:background="@drawable/button"
+                android:clickable="false"
                 android:clipToOutline="true"
                 android:elevation="10dp"
+                android:enabled="false"
                 android:text="Masuk"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_password"
-                app:layout_constraintVertical_bias="0.135" />
+                app:layout_constraintVertical_bias="0.419" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -128,7 +134,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/lupa"
+        app:layout_constraintTop_toBottomOf="@id/lupa"
+        app:layout_constraintBottom_toTopOf="@id/pt_bank_sep"
         app:layout_constraintVertical_bias="0.850">
 
         <ImageView
