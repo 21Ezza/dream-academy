@@ -12,13 +12,14 @@ class MainRegis : AppCompatActivity() {
     companion object {
         private const val USERNAME_DATA = "username"
         private const val USERNUM_DATA = "norekening"
-    }
-    fun getIntent(context: Context, userName: String, userNum: String): Intent {
-        return Intent(context, MainRegis::class.java).apply {
-            putExtra(USERNAME_DATA, userName)
-            putExtra(USERNUM_DATA, userNum)
+        fun newIntent(context: Context): Intent {
+            return Intent(context, MainRegis::class.java).apply {
+/*                putExtra(USERNAME_DATA, userName)
+                putExtra(USERNUM_DATA, userNum)*/
+            }
         }
     }
+
 
     private lateinit var binding: ActivityMainRegisBinding
 
@@ -30,12 +31,17 @@ class MainRegis : AppCompatActivity() {
         binding.idPengguna.editText?.setText(intent.getStringExtra(USERNAME_DATA))
 
         binding.btnSelanjutnya.setOnClickListener {
+            setResult(RESULT_OK, Intent().apply {
+                putExtra("username", binding.idPengguna.editText?.text.toString())
+
+            })
             startActivity(
                 Intent(this, MainActivity::class.java).apply {
                     putExtra("norekening",binding.iNoRekening.editText?.text.toString())
                     putExtra("username",binding.idPengguna.editText?.text.toString())
                 }
             )
+            finish()
         }
 
         binding.iNoRekening.editText?.doOnTextChanged { _, _, _, _ ->

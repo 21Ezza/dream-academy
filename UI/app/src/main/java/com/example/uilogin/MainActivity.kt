@@ -1,13 +1,12 @@
 package com.example.uilogin
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -21,10 +20,7 @@ class MainActivity : AppCompatActivity() {
         private const val USERNAME_DATA = "username"
         private const val USERNUM_DATA = "norekening"
     }
-
     private lateinit var binding: ActivityMainBinding
-    private val userNameTest: String get() = binding.textInput.editText?.text.toString()
-    private val userPassword: String get() = binding.textPassword.editText?.text.toString()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,11 +45,14 @@ class MainActivity : AppCompatActivity() {
             )
         }
         binding.lupa.setOnClickListener {
+            registerPage.launch(MainRegis.newIntent(this))
+
             startActivity(
                 Intent(this, MainRegis::class.java).apply {
                     putExtra("username",binding.textInput.editText?.text.toString())
                 }
             )
+
         }
 
         binding.textInput.editText?.doOnTextChanged { _, _, _, _ ->
@@ -77,15 +76,25 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-        private val validatePassword: Boolean get() {
+    private val validatePassword: Boolean get() {
 
-            val valid = binding.textPassword.editText!!.text.toString()
-            val isValid = valid.contains("[a-z]".toRegex())
-                    && valid.contains("[A-Z]".toRegex())
-                    && valid.contains("(?=.*[!^*@#\$%^&+=])".toRegex())
-                    && valid.contains("[0-9]".toRegex())
-                    && valid.length >= 8
+        val valid = binding.textPassword.editText!!.text.toString()
+        val isValid = valid.contains("[a-z]".toRegex())
+                && valid.contains("[A-Z]".toRegex())
+                && valid.contains("(?=.*[!^*@#\$%^&+=])".toRegex())
+                && valid.contains("[0-9]".toRegex())
+                && valid.length >= 8
 
-            return isValid
+        return isValid
+    }
+
+    private val registerPage = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            val intent = it.data ?: return@registerForActivityResult
+            val userName = intent.getStringExtra("user_data")
+
+            binding.textInput.editText?.setText(userName)
         }
     }
+
+}
